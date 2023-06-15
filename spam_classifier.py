@@ -1,4 +1,3 @@
-import spam_classifier as st
 import joblib
 import string
 import nltk
