@@ -2,15 +2,21 @@ import streamlit as st
 import joblib
 import string
 import nltk
+import pandas as pd
 nltk.download('punkt')
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 
 # Load the trained Extra Trees model
 model = joblib.load('extra_trees_model.pkl')
+
+
+# Load the cleaned text column from the pickle file
+loaded_text = pd.read_pickle('cleaned_text.pkl')
 
 # Load the saved TfidfVectorizer instance
 #tf = joblib.load('tfidf_vectorizer.pkl')
@@ -54,6 +60,10 @@ def main():
         preprocessed_text = preprocess_text(user_input)
 
         # Transform the preprocessed text using the pre-trained TfidfVectorizer
+        tf = TfidfVectorizer()
+        # %%
+        tf.fit(loaded_text)
+
         vectorized_text = tf.transform([preprocessed_text]).toarray()
 
         # Make the prediction using the trained model
