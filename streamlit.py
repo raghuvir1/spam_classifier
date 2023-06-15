@@ -59,10 +59,10 @@ def main():
 
         preprocessed_text = preprocess_text(user_input)
 
-        vectorized_text = vectorize_text(preprocessed_text)
+        vectorized_text = vectorize_text([preprocessed_text])
 
         # Make the prediction using the trained model
-        prediction = model.predict([vectorized_text])
+        prediction = model.predict(vectorized_text)
 
         # Display the prediction result
         if prediction == 1:
