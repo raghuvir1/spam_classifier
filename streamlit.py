@@ -61,6 +61,9 @@ def main():
 
         vectorized_text = vectorize_text([preprocessed_text])
 
+        # Reshape the vectorized text to match the expected number of features
+        vectorized_text = np.reshape(vectorized_text, (1, -1))
+
         # Make the prediction using the trained model
         prediction = model.predict(vectorized_text)
 
