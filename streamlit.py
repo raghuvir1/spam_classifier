@@ -8,12 +8,14 @@ nltk.download('punkt')
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 
 # Load the trained Extra Trees model
 model = joblib.load('extra_trees_model.pkl')
 
+# Load the saved TfidfVectorizer instance
+tf = joblib.load('tfidf_vectorizer.pkl')
 
 ps = PorterStemmer()
 # Function to preprocess the input text
@@ -37,7 +39,7 @@ def preprocess_text(text):
 
     return " ".join(y)
 
-tf = TfidfVectorizer()
+
 
 def vectorize_text(preprocessed_text):
     vectorized_text = tf.fit_transform(preprocessed_text).toarray()
@@ -58,11 +60,10 @@ def main():
         # Preprocess the user input
 
         preprocessed_text = preprocess_text(user_input)
+        vectorized_text = tf.fit_transform([preprocessed_text]).toarray()
+        #vectorized_text = vectorize_text([preprocessed_text])
 
-        vectorized_text = vectorize_text([preprocessed_text])
 
-        # Reshape the vectorized text to match the expected number of features
-        vectorized_text = np.reshape(vectorized_text, (1, -1))
 
         # Make the prediction using the trained model
         prediction = model.predict(vectorized_text)
