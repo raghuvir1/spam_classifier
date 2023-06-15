@@ -1,19 +1,25 @@
-# spam_classifier
-In this project, I will analyze SPAM email, identify key differences between spam and non-spam messages, and create classifiers that will be able to predict whether the content of a message will be spam or not. 
+# Creating ML Application for SPAM detection
+This program deploys a trained SPAM classification Machine Learning model onto a web interface using Streamlit.
+The program accepts user input, preprocesses it, vectorizes it using a pre-trained TfidfVectorizer, and makes predictions using a pre-trained Extra Trees model for classifying spam messages.
 
-## Data Loading & General Summary
-- Email Spam Detection Dataset sourced from Kaggle. 
-- csv file containing 5172 randomly picked emails and their respective labels for spam or not-spam classification
+### Init
 
-## Data Pre-Processing
+`pip install streamlit`
+`streamlit run spam_classifier.py`
+
+### Data Loading & General Summary
+- texts  Spam Detection Dataset sourced from Kaggle. 
+- csv file containing 5172 randomly picked texts s and their respective labels for spam or not-spam classification
+
+### Data Pre-Processing
 - renaming columns
 - dropping columns with high number of null values
 - Encoding target variable
 - Dropping duplicate rows
 
-## Text Processing 
+### Text Processing 
 - Engineering new features:
-  - 'length': length of email message
+  - 'length': length of texts  message
   - 'num_words': # of words in the message
   - 'num_sent': # of sentences
 - Text Cleaning using NLTK package
@@ -34,11 +40,11 @@ In this project, I will analyze SPAM email, identify key differences between spa
     - collapses different variations of a word to a common representation
     - helps reduce the vocabulary size and improve information retrieval
 
-## Plotting & Exploratory Data Analysis
+### Plotting & Exploratory Data Analysis
 - distributions of 'length', 'num_words', and 'num_sent' against spam and non-spam messages
   - visualize difference between predictors and outcome
   - better understanding of key differences between spam and non-spam messages:
-    - On avergage SPAM emails are 67 characters longer, contain ~10 more words, and have 1 more sentance than non-SPAM text. 
+    - On avergage SPAM texts are 67 characters longer, contain ~10 more words, and have 1 more sentance than non-SPAM text. 
   - wordclouds
     - visual representations of spam and non-spam text data where the size of each word corresponds to its frequency or importance in the text
     - SPAM wordcloud:
@@ -53,7 +59,7 @@ In this project, I will analyze SPAM email, identify key differences between spa
       - 'come'
       - 'time'
     
-## Model Inputs
+### Model Inputs
 - Converting cleaned text to vector inputs using Bag of Words Technique
   - 'Tfidvectorizer' converts text data into numerical feature vectors
   - calculates relative importance of each word in a document or corpus by considering its frequency in the document and its rarity in the entire corpus.
@@ -62,7 +68,7 @@ In this project, I will analyze SPAM email, identify key differences between spa
   - Training set shape: (4135, 6708) (4135,)
   - Test set shape: (1034, 6708) (1034,)
 
-## Model Building
+### Model Building
 - Defining classifiers:
   - Log Regression
   - SVM
@@ -82,7 +88,7 @@ In this project, I will analyze SPAM email, identify key differences between spa
 - Tuning Extra Trees model using grid search
   - New F-1 score 93.3%, up by ~2%
 
-## Intrepretting Classification Metrics
+### Intrepretting Classification Metrics
 - Accuracy:
   - Accuracy measures the overall correctness of the classifier's predictions. 
   - It represents the proportion of correctly classified instances (both spam and non-spam) out of the total number of instances. However, accuracy alone may not be sufficient when dealing with imbalanced datasets, where the number of non-spam instances significantly outweighs the number of spam instances.
@@ -99,7 +105,7 @@ In this project, I will analyze SPAM email, identify key differences between spa
 - Confusion Matrix:
   - Provides a detailed breakdown of the classifier's performance by showing the counts of true positive, true negative, false positive, and false negative predictions.
 
-## Results
+### Results
 - There is a tradeoff between Recall and Precision, and this tradeoff needs to be considered.
   - Increasing the classification threshold: 
     - If you raise the classification threshold, the classifier becomes more conservative in labeling a text as spam. 
@@ -111,7 +117,7 @@ In this project, I will analyze SPAM email, identify key differences between spa
     - However, it may lead to lower precision because the classifier is more likely to classify non-spam messages as spam, resulting in more false positives.
   - For this project, Precision takes precedence over Recall due to the significant chaos and damage a SPAM message can cause. 
 
-## Room For Improvement
+### Room For Improvement
 - Collect more data from external sources
   - Collect demographic, geographic data
   - domain names
