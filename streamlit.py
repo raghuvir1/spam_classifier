@@ -8,10 +8,13 @@ nltk.download('punkt')
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 # Load the trained Extra Trees model
 model = joblib.load('extra_trees_model.pkl')
+
+
 ps = PorterStemmer()
 # Function to preprocess the input text
 def preprocess_text(text):
@@ -34,6 +37,13 @@ def preprocess_text(text):
 
     return " ".join(y)
 
+tf = TfidfVectorizer()
+
+def vectorize_text(preprocessed_text):
+    vectorized_text = tf.fit_transform(preprocessed_text).toarray()
+    return vectorized_text
+
+
 # Create the web interface using Streamlit
 def main():
     # Set the title and description
@@ -48,6 +58,8 @@ def main():
         # Preprocess the user input
 
         preprocessed_text = preprocess_text(user_input)
+
+        vectorized_text = vectorize_text(preprocessed_text)
 
         # Make the prediction using the trained model
         prediction = model.predict([preprocessed_text])[0]
