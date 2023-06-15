@@ -41,11 +41,6 @@ def preprocess_text(text):
 
 
 
-def vectorize_text(preprocessed_text):
-    vectorized_text = tf.fit_transform(preprocessed_text).toarray()
-    return vectorized_text
-
-
 # Create the web interface using Streamlit
 def main():
     # Set the title and description
@@ -57,13 +52,11 @@ def main():
 
     # Create a button to trigger the prediction
     if st.button('Predict'):
-        # Preprocess the user input
-
+        # Preprocess the input message
         preprocessed_text = preprocess_text(user_input)
-        vectorized_text = tf.fit_transform([preprocessed_text]).toarray()
-        #vectorized_text = vectorize_text([preprocessed_text])
 
-
+        # Transform the preprocessed text using the pre-trained TfidfVectorizer
+        vectorized_text = tf.transform([preprocessed_text]).toarray()
 
         # Make the prediction using the trained model
         prediction = model.predict(vectorized_text)
