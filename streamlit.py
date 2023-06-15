@@ -13,7 +13,7 @@ from nltk.stem.porter import PorterStemmer
 model = joblib.load('extra_trees_model.pkl')
 
 # Load the saved TfidfVectorizer instance
-tf = joblib.load('tfidf_vectorizer.pkl')
+#tf = joblib.load('tfidf_vectorizer.pkl')
 
 ps = PorterStemmer()
 # Function to preprocess the input text
